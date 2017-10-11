@@ -1,0 +1,35 @@
+Denticom
+4
+
+Manager
+Gene
+Kofman
+SENIOR
+VB .Net MSSQL
+Project1 Project2 Project3
+15
+
+Developer
+Vasiliy
+Elfimov
+MIDDLE
+C# AngularJS .Net
+Back-end
+Project1
+
+Developer
+Pavel
+Pavlov
+SENIOR
+AngularJs C# MSSQL KnokoutJS
+Full-Stack
+Project2 Project4 Project5
+
+
+Developer
+Vasily
+Glebov
+JUNIOR
+C# AngularJS VueJs
+Front-end
+Project1

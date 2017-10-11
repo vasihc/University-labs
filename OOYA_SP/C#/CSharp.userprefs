@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{782222DE-0C99-4F42-9600-FC86223A1172}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="OPLab/Program.cs">
+    <Files>
+      <File FileName="OPLab/Developer.cs" Line="10" Column="40" />
+      <File FileName="OPLab/Manager.cs" Line="32" Column="29" />
+      <File FileName="OPLab/Program.cs" Line="17" Column="13" />
+      <File FileName="OPLab/Programmer.cs" Line="43" Column="64" />
+      <File FileName="OPLab/ITCompany.cs" Line="38" Column="36" />
+      <File FileName="../../Desktop/University-labs-master/3nd semester/SPLabJava/src/main/java/com/ran/splabjava/Developer.java" Line="40" Column="6" />
+      <File FileName="OPLab/Position.cs" Line="4" Column="25" />
+      <File FileName="../../Desktop/University-labs-master/3nd semester/SPLabJava/src/main/java/com/ran/splabjava/Programmer.java" Line="44" Column="23" />
+      <File FileName="../../Desktop/OOYa_i_SP/OOYa_i_SP/Faculty.cs" Line="22" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.ItemProperties.OPLab PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

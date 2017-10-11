@@ -1,0 +1,5 @@
+/Users/vasihc/Projects/OPLab/OPLab/bin/Debug/OPLab.exe
+/Users/vasihc/Projects/OPLab/OPLab/bin/Debug/OPLab.pdb
+/Users/vasihc/Projects/OPLab/OPLab/obj/x86/Debug/OPLab.csproj.CoreCompileInputs.cache
+/Users/vasihc/Projects/OPLab/OPLab/obj/x86/Debug/OPLab.exe
+/Users/vasihc/Projects/OPLab/OPLab/obj/x86/Debug/OPLab.pdb
