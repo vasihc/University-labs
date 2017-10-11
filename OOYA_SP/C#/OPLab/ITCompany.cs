@@ -12,6 +12,9 @@ namespace OPLab
         private string _name;
         private List<Programmer> _programmers;
 
+        public ITCompany()
+        { }
+
         public ITCompany(string name, List<Programmer> programmers)
         {
             _name = name;
@@ -23,16 +26,27 @@ namespace OPLab
             //destructor
         }
 
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
 
+        public List<Programmer> Programmers
+        {
+            get => _programmers;
+            set => _programmers = value;
+        }
 
         public void Sort()
         {
-            // _programmers.Sort(0, _programmers.Count, _programmers.First().CompareProgrammers());
+            _programmers =  _programmers.OrderBy(p => p.Position ).ThenBy(p => p.Name).ThenBy(p => p.Surname).ToList();
         }
 
         public void Print()
         {
             Console.WriteLine("IT Company: {0}", _name);
+            Console.WriteLine();
             foreach (Programmer programmer in _programmers)
             {
                 programmer.Print();
@@ -57,15 +71,17 @@ namespace OPLab
 
         List<string> getWords(string s)
         {
-            List<string> result;
+            List<string> result = new List<string>();
             int start = 0;
-            int end = s.find(" ");
-            while (end != std::string::npos) {
-                result.push_back(s.substr(start, end - start));
+            int end = s.IndexOf(" ");
+            while (end > 0)
+            {
+                var a = s.Substring(start, end - start);
+                result.Add(a);
                 start = end + 1;
-                end = s.find(" ", start);
+                end = s.IndexOf(" ", start);
             }
-            result.push_back(s.substr(start, end));
+            //result.Add(s.Substring(start, end));
             return result;
         }
 
@@ -76,7 +92,8 @@ namespace OPLab
                 using (StreamReader sr = File.OpenText(path))
                 {
                     string nameCompany = sr.ReadLine();
-                    int programmersQuant = Convert.ToInt32(sr.ReadLine());
+                    string tmp = sr.ReadLine();
+                    int programmersQuant = Convert.ToInt32(tmp);
                     sr.ReadLine();
                     var allProgrammers = new List<Programmer>();
                     for (int i = 0; i < programmersQuant; i++)
@@ -98,9 +115,10 @@ namespace OPLab
                             int subordinatesQuantity = Convert.ToInt32(sr.ReadLine());
                             allProgrammers.Add(new Manager(name, surname, position, skills, subordinatesQuantity, projects));
                         }
-                        sr.ReadLine();
+                    // sr.ReadLine();
                     }
-                    return new ITCompany(nameCompany, allProgrammers);
+                    var result = new ITCompany(nameCompany, allProgrammers);
+                    return result;
                 }
         }
     }

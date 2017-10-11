@@ -6,15 +6,16 @@ namespace OPLab
     {
         public static void Main(string[] args)
         {
-            ITCompany company;
+            ITCompany company = new ITCompany();
 
-            company.ReadInfoFromFile();
+           company =  company.ReadInfoFromFile();
 
-            company.Sort();
-            company.Print();
+           company.Sort();
+           company.Print();
 
-            company = null;
+           company = null;
+           Console.ReadLine();
 
-		}
+        }
     }
 }

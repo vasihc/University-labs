@@ -13,7 +13,7 @@ namespace OPLab
                          int subordinatesQuantity, List<String> projects) : base(name, surname, position, skills)
         {
             SubordinatesQuantity = subordinatesQuantity;
-            Projects = _projects;
+            Projects = projects;
         }
 
         public int SubordinatesQuantity { get => _subordinatesQuantity; set => _subordinatesQuantity = value; }
@@ -29,13 +29,14 @@ namespace OPLab
 			return result;
 		}
 
-        public void Print() 
+        public override void Print() //
         {
-            Console.WriteLine("Manager: {0}, {1}", Surname, Name);
-            Console.WriteLine("Position: {0}", GetProjectsAsString());
+            Console.WriteLine("Manager: {0} {1}", Surname, Name);
+            Console.WriteLine("Position: {0}", Position);
             Console.WriteLine("Skills: {0}", GetSkillsAsString());
             Console.WriteLine("Projects: {0}", GetProjectsAsString());
             Console.WriteLine("Subordinates quantity: {0}",SubordinatesQuantity); 
+            Console.WriteLine();
         }
     }
 }

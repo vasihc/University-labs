@@ -3,3 +3,9 @@
 /Users/vasihc/Projects/OPLab/OPLab/obj/x86/Debug/OPLab.csproj.CoreCompileInputs.cache
 /Users/vasihc/Projects/OPLab/OPLab/obj/x86/Debug/OPLab.exe
 /Users/vasihc/Projects/OPLab/OPLab/obj/x86/Debug/OPLab.pdb
+C:\Users\vasihc\Dropbox\University-labs\OOYA_SP\C#\OPLab\obj\x86\Debug\OPLab.csprojResolveAssemblyReference.cache
+C:\Users\vasihc\Dropbox\University-labs\OOYA_SP\C#\OPLab\obj\x86\Debug\OPLab.csproj.CoreCompileInputs.cache
+C:\Users\vasihc\Dropbox\University-labs\OOYA_SP\C#\OPLab\obj\x86\Debug\OPLab.exe
+C:\Users\vasihc\Dropbox\University-labs\OOYA_SP\C#\OPLab\obj\x86\Debug\OPLab.pdb
+C:\Users\vasihc\Dropbox\University-labs\OOYA_SP\C#\OPLab\bin\Debug\OPLab.exe
+C:\Users\vasihc\Dropbox\University-labs\OOYA_SP\C#\OPLab\bin\Debug\OPLab.pdb
