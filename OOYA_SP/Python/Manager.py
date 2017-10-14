@@ -1,12 +1,10 @@
-import Programmer
+from Programmer import Programmer
 
 class Manager(Programmer):
-    def __init__(self, developer_name, developer_surname, subordinatesQuantity, projects):
-        super.__init__(self, developer_name, developer_surname)
+    def __init__(self, nm, srnm, pos, skls, subordinatesQuantity, projects):
         self._subordinatesQuantity = subordinatesQuantity
         self._projects = projects
+        super().__init__(nm, srnm, pos, skls)
 
-    _subordinatesQuantity = 0
-    _projects = []
-
-    
+    def __print__(self):
+        print(self._name, self._surname, "is ", self._position, "have ", self._subordinatesQuantity, ". Projects: ",  ", ".join([str(x) for x in self._projects] ))

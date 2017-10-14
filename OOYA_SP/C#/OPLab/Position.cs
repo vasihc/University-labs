@@ -7,6 +7,5 @@ namespace OPLab
 		JUNIOR,
         MIDDLE,
 		SENIOR
-
 	}
 }

@@ -1,21 +1,19 @@
-import Position
-
+from Position import Position
 class Programmer:
-    def __init__(self, programmer_name, programmer_surname):
-        self.name = programmer_name
-        self.surname = programmer_surname
+    def __init__(self, nm, srnm, pos, skls):
+        self._name = nm
+        self._surname = srnm
+        self._position = pos
+        self._skills = skls
 
-    _name = ""
-    _surname = ""
-    _position = Position.Position.JUNIOR
-    _skills = []
     def getName(self):
         return self._name
 
     def setName(self, val):
          self._name = val
 
-
+    def __print__(self):
+        print("Programmer", self._name + ' has skills:' + self._skills)
 
 
 

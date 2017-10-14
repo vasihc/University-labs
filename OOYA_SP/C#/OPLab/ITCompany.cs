@@ -24,6 +24,7 @@ namespace OPLab
         ~ITCompany()
         {
             //destructor
+            Console.WriteLine("Company was deleted.");
         }
 
         public string Name
