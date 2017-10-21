@@ -12,6 +12,8 @@ namespace OPLab
 
            company.Sort();
            company.Print();
+           company.DeleteNotOdd();
+           company.Print();
 
            company = null;
            Console.ReadLine();

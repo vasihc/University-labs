@@ -9,6 +9,7 @@ namespace OPLab
         private String _knowledgeArea;
         private String _currentProject;
 
+
 		public Developer(String name, String surname, Position position, List<String> skills,
                          String knowledgeArea, String currentProject) : base(name, surname, position, skills)
 		{

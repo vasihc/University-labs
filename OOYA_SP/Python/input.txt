@@ -21,7 +21,7 @@ Pavlov
 SENIOR
 AngularJs C# MSSQL KnokoutJS 
 Full-Stack
-Project2 Project4 Project5 
+Project2
 Developer
 Vasily
 Glebov

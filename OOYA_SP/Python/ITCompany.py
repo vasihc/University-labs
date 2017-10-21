@@ -57,6 +57,20 @@ class ITCompany:
     def __sort__(self):
         sorted(self._programmers, key=lambda p : (p._position, p._name, p._surname))
 
+    def __removeNotOdd__(self):
+        programmers = []
+        for programmer in self._programmers :
+             if type(programmer) is Developer :
+                 if int(programmer._currentProject[0][len(programmer._currentProject[0]) - 1]) % 2 !=0 :
+                     programmers.append(programmer)
+             else :
+                 programmers.append(programmer)
+        self._programmers = programmers
+
+
+
+
+
 
 
 

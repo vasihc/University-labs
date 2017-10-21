@@ -122,6 +122,28 @@ namespace OPLab
                     return result;
                 }
         }
+
+        public void DeleteNotOdd()
+        {
+            List<Programmer> programmers = new List<Programmer>();
+            for (int i = 0; i < this._programmers.Count(); i++)
+            {
+                if (this._programmers[i].GetType() == typeof(Developer))
+                {
+                    var developer = (Developer)Convert.ChangeType(this.Programmers[i], typeof(Developer));
+                    if (Convert.ToInt32(developer.CurrentProject[developer.CurrentProject.Length - 2])%2 != 0)
+                    {
+                        programmers.Add(developer);
+                    }
+                }
+                else
+                {
+                    programmers.Add(this._programmers[i]);
+                }
+            }
+			this._programmers = null;
+			this._programmers = programmers;
+        }
     }
 
 }
