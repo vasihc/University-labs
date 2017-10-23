@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace OPLab
 {
-    public class ITCompany
-    {
+    public class ITCompany // Класс-контейнер
+	{
         private string _name;
-        private List<Programmer> _programmers;
+        private List<Programmer> _programmers; // Список экземпляров базового класса
 
-        public ITCompany()
+		public ITCompany()
         { }
 
         public ITCompany(string name, List<Programmer> programmers)
@@ -39,13 +39,13 @@ namespace OPLab
             set => _programmers = value;
         }
 
-        public void Sort()
-        {
+        public void Sort() // Метод, определяющий правило для сортировки
+		{
             _programmers =  _programmers.OrderBy(p => p.Position ).ThenBy(p => p.Name).ThenBy(p => p.Surname).ToList();
         }
 
-        public void Print()
-        {
+        public void Print() // Вывод в консоль содержимого контейнера
+		{
             Console.WriteLine("IT Company: {0}", _name);
             Console.WriteLine();
             foreach (Programmer programmer in _programmers)
@@ -86,8 +86,8 @@ namespace OPLab
             return result;
         }
 
-        public ITCompany ReadInfoFromFile()
-        {
+        public ITCompany ReadInfoFromFile() // Чтение изначального содержимого контейнера из файла
+		{
             string path = "input.txt";
            
                 using (StreamReader sr = File.OpenText(path))
@@ -123,8 +123,8 @@ namespace OPLab
                 }
         }
 
-        public void DeleteNotOdd()
-        {
+        public void DeleteNotOdd() // Удаление разработчиков с четными номерами проектов
+		{
             List<Programmer> programmers = new List<Programmer>();
             for (int i = 0; i < this._programmers.Count(); i++)
             {

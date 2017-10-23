@@ -2,18 +2,18 @@ from Position import Position
 from Developer import Developer
 from Manager import Manager
 
-class ITCompany:
+class ITCompany:#Класс-контейнер
     def __new__(cls):
         return super(ITCompany, cls).__new__(cls)
 
     def __init__(self, name, programmers):
         self._name = name
-        self._programmers = programmers
+        self._programmers = programmers #Список экземпляров базового класса
 
     def __del__(self):
         print("Company deleted")
 
-    def __print__(self):
+    def __print__(self): #Вывод в консоль содержимого контейнера
         print(self._name)
         for person in self._programmers :
             person.__print__();
@@ -26,7 +26,7 @@ class ITCompany:
         else : return Position.SENIOR;
 
 
-    def __read__(self):
+    def __read__(self): #Чтение изначального содержимого контейнера из файла
         f = open('input.txt', 'r')
         name = f.readline().replace('\n','')
         quant = int(f.readline())
@@ -54,10 +54,10 @@ class ITCompany:
         cm.__init__(name, programmers)
         return cm
 
-    def __sort__(self):
+    def __sort__(self): #Метод, определяющий правило для сортировки
         sorted(self._programmers, key=lambda p : (p._position, p._name, p._surname))
 
-    def __removeNotOdd__(self):
+    def __removeNotOdd__(self): #даление разработчиков с четными номерами проектов
         programmers = []
         for programmer in self._programmers :
              if type(programmer) is Developer :
