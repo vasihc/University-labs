@@ -1,0 +1,37 @@
+c:\users\admin\source\repos\Perceptron\Perceptron\bin\Debug\Perceptron.exe.config
+c:\users\admin\source\repos\Perceptron\Perceptron\bin\Debug\Perceptron.exe
+c:\users\admin\source\repos\Perceptron\Perceptron\bin\Debug\Perceptron.pdb
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.csprojResolveAssemblyReference.cache
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.Form1.resources
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.Properties.Resources.resources
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.csproj.GenerateResource.Cache
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.csproj.CoreCompileInputs.cache
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.exe
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.pdb
+c:\users\admin\source\repos\Perceptron\Perceptron\obj\Debug\Perceptron.LearnForm.resources
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.csprojResolveAssemblyReference.cache
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.Form1.resources
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.LearnForm.resources
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.Properties.Resources.resources
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.csproj.GenerateResource.Cache
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.csproj.CoreCompileInputs.cache
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.exe.config
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.xml
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.exe
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.pdb
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron ML lab.exe
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron ML lab.pdb
+C:\Users\vasihc\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.SetForm.resources
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.exe
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.Form1.resources
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.LearnForm.resources
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.Properties.Resources.resources
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.SetForm.resources
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.csproj.GenerateResource.Cache
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.csproj.CoreCompileInputs.cache
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.exe.config
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.xml
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron ML lab.exe
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron ML lab.pdb
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\obj\Debug\Perceptron.csprojResolveAssemblyReference.cache
+C:\Users\MacBook\Desktop\Perceptron\Perceptron\bin\Debug\Perceptron ML lab.pdb

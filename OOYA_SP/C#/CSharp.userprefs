@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{782222DE-0C99-4F42-9600-FC86223A1172}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="OPLab/ITCompany.cs">
     <Files>
-      <File FileName="OPLab/Developer.cs" Line="7" Column="27" />
+      <File FileName="OPLab/Developer.cs" Line="25" Column="3" />
       <File FileName="OPLab/Manager.cs" Line="13" Column="79" />
       <File FileName="OPLab/Program.cs" Line="16" Column="28" />
-      <File FileName="OPLab/Programmer.cs" Line="39" Column="13" />
-      <File FileName="OPLab/ITCompany.cs" Line="139" Column="21" />
+      <File FileName="OPLab/Programmer.cs" Line="29" Column="73" />
+      <File FileName="OPLab/ITCompany.cs" Line="89" Column="99" />
       <File FileName="OPLab/Position.cs" Line="11" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
