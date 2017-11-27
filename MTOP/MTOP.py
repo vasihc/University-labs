@@ -3,13 +3,13 @@ MTOP LAB
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import math
+import math 
 
 f = lambda x, y: 2 * x * y
 h = 0.001
 
-ylist = [1]
-xlist = np.arange(0, 2, h)
+ylist = [-4]
+xlist = np.arange(2, 3, h)
 
 for x in xlist:
     y = ylist[len(ylist) - 1]
@@ -22,9 +22,9 @@ for x in xlist:
 ylist.pop()
 
 plt.plot(xlist, ylist, 'r-', linewidth=2.0, label="y(x)")
-plt.xlabel("X", fontsize=26, color="k")
-plt.ylabel("Y", fontsize=26, color="k")
+plt.xlabel("X", fontsize=16, color="b")
+plt.ylabel("Y", fontsize=16, color="b")
 plt.grid(True)
-plt.legend(fontsize=16, shadow=True, fancybox=True)
+plt.legend(fontsize=14, shadow=True, fancybox=True)
 
 plt.show()
