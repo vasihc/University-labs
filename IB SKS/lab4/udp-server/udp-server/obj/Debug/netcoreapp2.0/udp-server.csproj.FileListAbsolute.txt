@@ -1,0 +1,11 @@
+C:\Users\Vasily\Desktop\udp-server\udp-server\bin\Debug\netcoreapp2.0\udp-server.deps.json
+C:\Users\Vasily\Desktop\udp-server\udp-server\bin\Debug\netcoreapp2.0\udp-server.runtimeconfig.json
+C:\Users\Vasily\Desktop\udp-server\udp-server\bin\Debug\netcoreapp2.0\udp-server.runtimeconfig.dev.json
+C:\Users\Vasily\Desktop\udp-server\udp-server\bin\Debug\netcoreapp2.0\udp-server.dll
+C:\Users\Vasily\Desktop\udp-server\udp-server\bin\Debug\netcoreapp2.0\udp-server.pdb
+C:\Users\Vasily\Desktop\udp-server\udp-server\obj\Debug\netcoreapp2.0\udp-server.csprojResolveAssemblyReference.cache
+C:\Users\Vasily\Desktop\udp-server\udp-server\obj\Debug\netcoreapp2.0\udp-server.csproj.CoreCompileInputs.cache
+C:\Users\Vasily\Desktop\udp-server\udp-server\obj\Debug\netcoreapp2.0\udp-server.AssemblyInfoInputs.cache
+C:\Users\Vasily\Desktop\udp-server\udp-server\obj\Debug\netcoreapp2.0\udp-server.AssemblyInfo.cs
+C:\Users\Vasily\Desktop\udp-server\udp-server\obj\Debug\netcoreapp2.0\udp-server.dll
+C:\Users\Vasily\Desktop\udp-server\udp-server\obj\Debug\netcoreapp2.0\udp-server.pdb
