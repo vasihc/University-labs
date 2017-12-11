@@ -13,7 +13,7 @@ def mat2vec(x):
     for i in range(x.shape[0]):
         for j in range(x.shape[1]):
             tmp1[c] = x[i,j]
-            c +=1
+            c += 1
     return tmp1
 
 
@@ -35,7 +35,7 @@ def create_W(x):
 
 
 #Read Image file and convert it to Numpy array
-def readImg2array(file,size, threshold= 145):
+def readImg2array(file, size, threshold= 145):
     pilIN = Image.open(file).convert(mode="L")
     pilIN= pilIN.resize(size)
     #pilIN.thumbnail(size,Image.ANTIALIAS)
@@ -59,7 +59,7 @@ def array2img(data, outFile = None):
 
 
 #Update
-def update(w,y_vec,theta=0.5,time=100):
+def update(w, y_vec, theta=0.5, time=100):
     for s in range(time):
         m = len(y_vec)
         i = random.randint(0,m-1)
@@ -84,7 +84,7 @@ def hopfield(train_files, test_files,theta=0.5, time=1000, size=(100,100),thresh
     num_files = 0
     for path in train_files:
         print (path)
-        x = readImg2array(file=path,size=size,threshold=threshold)
+        x = readImg2array(file=path, size=size, threshold=threshold)
         x_vec = mat2vec(x)
         print (len(x_vec))
         if num_files == 0:
@@ -101,10 +101,11 @@ def hopfield(train_files, test_files,theta=0.5, time=1000, size=(100,100),thresh
     #Import test data
     counter = 0
     for path in test_files:
-        y = readImg2array(file=path,size=size,threshold=threshold)
+        y = readImg2array(file=path, size=size, threshold=threshold)
         oshape = y.shape
-        y_img = array2img(y)
-        y_img.show()
+        outfile = current_path + "/before_" + str(counter) + ".jpeg"
+        y_img = array2img(y, outFile=outfile)
+        #y_img.show()
         print ("Imported test data")
 
         y_vec = mat2vec(y)
@@ -120,26 +121,30 @@ def hopfield(train_files, test_files,theta=0.5, time=1000, size=(100,100),thresh
         counter +=1
 
 
-#Main
-#First, you can create a list of input file path
+#Сreate a list of input file path
 current_path = os.getcwd()
 train_paths = []
 path = current_path+"/train_pics/"
 for i in os.listdir(path):
-    if re.match(r'[0-9a-zA-Z-]*.jp[e]*g',i):
+    if re.match(r'[0-9a-zA-Z-_]*.jp[e]*g',i):
         train_paths.append(path+i)
 
-#Second, you can create a list of sungallses file path
+
+#Сreate a list of testing files path
 test_paths = []
 path = current_path+"/test_pics/"
 for i in os.listdir(path):
     if re.match(r'[0-9a-zA-Z-_]*.jp[e]*g',i):
         test_paths.append(path+i)
 
-#Hopfield network starts!
+
+
+
+#Hopfield network starts
 hopfield(train_files=train_paths,
          test_files=test_paths,
-         theta=0.5,time=20000,
+         theta=0.7,
+         time=9000000,
          size=(100,100),
-         threshold=60,
+         threshold=70,
          current_path = current_path)
