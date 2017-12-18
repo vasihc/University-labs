@@ -7,12 +7,11 @@ from scipy.integrate import odeint
 from scipy.misc import derivative
 from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
-import math
-from scipy.integrate import quad
 from scipy.special import erf
 
 global r, n, Psi, Fi, X, XX
-T = open("glebov-2b.txt", "w")
+
+LST = open("glebov-2b.txt", "wt")
 
 
 # potential function
@@ -25,25 +24,8 @@ def U(x):
 
 # function (13)
 def q(e, x):
+    print("e = ", e, ", x = ", x)
     return 2.0*(e-U(x))
-
-
-def operT(funF, X):
-    localX = [X[0] - 2 * 1.e-6]
-    for x in X:
-        localX.append(x)
-    localX.append(X[len(X) - 1] + 2 * 1.e-6)
-
-    localFunF = [0]
-    for val in funF:
-        localFunF.append(val)
-    localFunF.append(0)
-
-    fun = interp1d(localX, localFunF, kind='cubic')
-    der = []
-    for x in X:
-        der.append(-1/2 * derivative(fun, x, dx=1.e-6, n=2, order=5))
-    return der
 
 def system1(cond1, X):
     global eee
@@ -102,56 +84,55 @@ def f_fun(e):
     f = der1-der2
     return f
 
-def average_value(psi, oper_value):
-    global X
-    value = []
-    for ind in range(len(psi)):
-        value.append(psi[ind] * oper_value[ind])
 
-    fun = interp1d(X, value, kind='cubic')
-    result = quad(fun, A, B)
-    return result
+def m_bis(x1, x2, tol):
+    global r, n
+    if f_fun(e=x2)*f_fun(e=x1) > 0.0:
+        print("ERROR: f_fun(e=x2, r, n)*f_fun(e=x1, r, n) > 0")
+        print("x1=", x1)
+        print("x2=", x2)
+        print("f_fun(e=x1, r=r, n=n)=", f_fun(e=x1))
+        print("f_fun(e=x2, r=r, n=n)=", f_fun(e=x2))
+        exit()
+    while abs(x2-x1) > tol:
+        xr = (x1+x2)/2.0
+        if f_fun(e=x2)*f_fun(e=xr) < 0.0:
+            x1 = xr
+        else:
+            x2 = xr
+        if f_fun(e=x1)*f_fun(e=xr) < 0.0:
+            x2 = xr
+        else:
+            x1 = xr
+    return (x1+x2)/2.0
 
 
-def plotting_wf0(e):
+def plotting_f():
+    plt.axis([U0, e2, fmin, fmax])
+    ZeroE = np.zeros(ne, dtype=float)
+    plt.plot(ee, ZeroE, 'k-', linewidth=1.0)  # abscissa axis
+    plt.plot(ee, af, 'bo', markersize=2)
+    plt.xlabel("E", fontsize=18, color="k")
+    plt.ylabel("f(E)", fontsize=18, color="k")
+    plt.grid(True)
+    # save to file
+    plt.savefig('glebov-2b-f.pdf', dpi=300)
+    plt.show()
+
+
+def plotting_wf(e):
+
     global r, n, Psi, Fi, X, XX
     ff = f_fun(e)
-    print("f=", ff)
     plt.axis([A, B, -1, W])
     Upot = np.array([U(X[i]) for i in np.arange(n)])
-
-    coefPsi = average_value(Psi, Psi)
-    Psi[:] = Psi[:]/math.sqrt(coefPsi[0])
-    normPsi = average_value(Psi, Psi)
-    print("integrate Psi = ", normPsi[0])
-
-    coefFi = average_value(Fi, Fi)
-    Fi[:] = Fi[:] / math.sqrt(coefFi[0])
-    normFi = average_value(Fi, Fi)
-    print("integrate Fi = ", normFi[0])
-
-    averageT = average_value(Psi, operT(Psi, X))
-    print("<T> = ", averageT[0])
-
-    UPsiValue = []
-    for ind in range(len(X)):
-        UPsiValue.append(Psi[ind] * U(X[ind]))
-    averageU = average_value(Psi, UPsiValue)
-    print("<U> = ", averageU[0])
-
-    print("<T> + <U> = ", averageT[0] + averageU[0])
-
-    Psi2 = []
-    for psi in Psi:
-        Psi2.append(math.pow(psi, 2))
-
     plt.plot(X, Upot, 'g-', linewidth=6.0, label="U(x)")
     Zero = np.zeros(n, dtype=float)
     plt.plot(X, Zero, 'k-', linewidth=1.0)  # abscissa axis
     plt.plot(X, Psi, 'r-', linewidth=2.0, label="Psi(x)")
-    plt.plot(X, Psi2, 'b-', linewidth=2.0, label="Psi^2(x)")
+    plt.plot(XX, Fi, 'b-', linewidth=2.0, label="Fi(x)")
     plt.xlabel("X", fontsize=18, color="k")
-    plt.ylabel("Psi(x), Psi^2(x), U(x)", fontsize=18, color="k")
+    plt.ylabel("Psi(x), Fi(x), U(x)", fontsize=18, color="k")
     plt.grid(True)
     plt.legend(fontsize=16, shadow=True, fancybox=True, loc='upper right')
     plt.plot([X[r]], [Psi[r]], color='red', marker='o', markersize=7)
@@ -160,10 +141,9 @@ def plotting_wf0(e):
     plt.text(-1.5, 2.7, string1, fontsize=14, color='black')
     plt.text(-1.5, 2.3, string2, fontsize=14, color="black")
     # save to file
-    name = "glebov-2a.pdf"
+    name = "glebov-2b" + "-" + str(ngr) + ".pdf"
     plt.savefig(name, dpi=300)
-    plt.show()
-
+ #   plt.show()
 
 # initial data (atomic units)
 V0 = 20 / 27.212
@@ -173,9 +153,9 @@ B = +L
 # number of mesh node
 n = 1001  # odd integer number
 print("n=", n)
-print("n=", n, file=T)
+print("n=", n, file=LST)
 # minimum of potential (atomic units)
-U0 = 0
+U0 = -2
 # maximum of potential (atomic units) - for visualization only!
 W = 5.0
 # x-coordinates of the nodes
@@ -185,15 +165,55 @@ XX = np.linspace(B, A, n)  # backwards
 r = (n-1)*3//4      # forward
 rr = n-r-1          # backwards
 print("r=", r)
-print("r=", r, file=T)
+print("r=", r, file=LST)
 print("rr=", rr)
-print("rr=", rr, file=T)
+print("rr=", rr, file=LST)
 print("X[r]=", X[r])
-print("X[r]=", X[r], file=T)
+print("X[r]=", X[r], file=LST)
 print("XX[rr]=", XX[rr])
-print("XX[rr]=", XX[rr], file=T)
-# input of energy
-e = float(input("Energy = "))
-print("e =", e)
+print("XX[rr]=", XX[rr], file=LST)
+# plot of f(e)
+e1 = U0+0.0000005
+e2 = 10.0
+print("e1=", e1, "   e2=", e2)
+print("e1=", e1, "   e2=", e2, file=LST)
+ne = 101
+print("ne=", ne)
+print("ne=", ne, file=LST)
+ee = np.linspace(e1, e2, ne)
+af = np.zeros(ne, dtype=float)
+porog = 5.0
+tol = 1.0e-7
+energy = []
+ngr = 0
+
+for i in np.arange(ne):
+    e = ee[i]
+    af[i] = f_fun(e)
+    stroka = "i = {:3d}   e = {:8.5f}  f[e] = {:12.5e}"
+    print(stroka.format(i, e, af[i]))
+    print(stroka.format(i, e, af[i]), file=LST)
+    if i > 0:
+        Log1 = af[i]*af[i-1] < 0.0
+        Log2 = np.abs(af[i]-af[i-1]) < porog
+        if Log1 and Log2:
+            energy1 = ee[i-1]
+            energy2 = ee[i]
+            eval = m_bis(energy1, energy2, tol)
+            print("eval = {:12.5e}".format(eval))
+            dummy = plotting_wf(eval)
+            energy.append(eval)
+            ngr += 1
+
+fmax = +10.0
+fmin = -10.0
 # plot
-dummy = plotting_wf0(e)
+dummy = plotting_f()
+# output of roots
+nroots = len(energy)
+print("nroots =", nroots)
+print("nroots =", nroots, file=LST)
+for i in np.arange(nroots):
+    stroka = "i = {:1d}    energy[i] = {:12.5e}"
+    print(stroka.format(i, energy[i]))
+    print(stroka.format(i, energy[i]), file=LST)

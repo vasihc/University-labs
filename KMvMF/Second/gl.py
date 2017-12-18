@@ -4,12 +4,12 @@ from scipy.misc import derivative
 from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 from scipy.integrate import quad
-from numpy.specify import erf
+from scipy.special import erf
 import math
 
 class Method_bis:
     # initial data (atomic units)
-    L = 2.0 / 0.5292
+    L = convert_angstrom_to_atomic_units(2.0)
     A = -L
     B = +L
     # number of mesh node
@@ -145,25 +145,29 @@ class Method_bis:
                         break
         return energy, fun_psi
 
+def convert_angstrom_to_atomic_units(value):
+    return value / 0.53
 
 
-V0 = 20 / 27.212
-L = 2.0 / 0.5292
+def convert_electronvolt_to_atomic_units(value):
+    return value / 27.212
+
+V0 = convert_electronvolt_to_atomic_units(20)
+L = convert_angstrom_to_atomic_units(2.0)
 W = 5.0
-L = 2.0 / 0.5292
 A = -L
 B = +L
 n = 1001
 X = np.linspace(A, B, n)  # forward
 def fun_U_0(x):
     if (abs(x) < L):
-        return V0 * erf(f)
+        return V0 * erf(x)
     else:
         return W
 
 def fun_U(x):
-    if -0.7 < x < -0.5:
-        return fun_U_0(x) + 0.7
+    if 1 < x < 1.2:
+        return fun_U_0(x) + 0.1
     else:
         return fun_U_0(x)
 
@@ -191,9 +195,10 @@ def plot(U0, U, ksi1, ksi2):
     plt.ylabel("U0(x), U(x), Ksi1(x), Ksi2(x)", fontsize=18, color="k")
     plt.grid(True)
     plt.legend(fontsize=16, shadow=True, fancybox=True, loc='upper right')
+    plt.savefig("second", dpi=300)
     plt.show()
 
-method_bis_U0 = Method_bis(fun_U_0, U0=0, ne=101, e2=15, count_e=10)
+method_bis_U0 = Method_bis(fun_U_0, U0=-2, ne=101, e2=1, count_e=10)
 energy_U0, psi_U0 = method_bis_U0.get_energy()
 for i in np.arange(len(energy_U0)):
     stroka = "i = {:1d}    energy[i] = {:12.5e}"
@@ -209,8 +214,8 @@ for i in range(len(energy_U0)):
     for j in range(len(energy_U0)):
         new_value = get_value_V(psi_U0[i], value_fun_V, psi_U0[j])
         V[i].append(new_value)
-        #if i != j:
-            #print("Vlm = ", abs(new_value), " El - Em = ", abs(energy_U0[i] - energy_U0[j]))
+        if i != j:
+            print("Vlm = ", abs(new_value), " El - Em = ", abs(energy_U0[i] - energy_U0[j]))
 
 summa = 0
 for i in range(1, len(energy_U0)):

@@ -59,17 +59,27 @@ def array2img(data, outFile = None):
 
 
 #Update
-def update(w, y_vec, theta=0.5, time=100):
+def update(w, y_vec, oshape, path, theta=0.5, time=100):
+    current_path = os.getcwd()
+
+    counter = 0
     for s in range(time):
         m = len(y_vec)
-        i = random.randint(0,m-1)
-        u = np.dot(w[i][:],y_vec) - theta
+        i = random.randint(0, m-1)
+        u = np.dot(w[i][:], y_vec) - theta
 
         if u > 0:
             y_vec[i] = 1
         elif u < 0:
             y_vec[i] = -1
 
+
+        if s % 10000 == 0:
+            y_vec_after = y_vec.reshape(oshape)
+            outfile = current_path + "/iter/before_iter_" + path[len(path) - 11 :-4] + str(counter) + ".jpeg"
+            array2img(y_vec_after, outFile=outfile)
+            counter += 1
+            print(counter)
     return y_vec
 
 
@@ -110,7 +120,7 @@ def hopfield(train_files, test_files,theta=0.5, time=1000, size=(100,100),thresh
 
         y_vec = mat2vec(y)
         print ("Updating...")
-        y_vec_after = update(w=w,y_vec=y_vec,theta=theta,time=time)
+        y_vec_after = update(w=w,y_vec=y_vec,theta=theta,time=time, oshape=oshape, path=path)
         y_vec_after = y_vec_after.reshape(oshape)
         if current_path is not None:
             outfile = current_path+"/after_"+str(counter)+".jpeg"
@@ -144,7 +154,7 @@ for i in os.listdir(path):
 hopfield(train_files=train_paths,
          test_files=test_paths,
          theta=0.7,
-         time=9000000,
+         time=100000,
          size=(100,100),
          threshold=70,
-         current_path = current_path)
+         current_path=current_path)
