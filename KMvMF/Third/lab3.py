@@ -1,11 +1,11 @@
 import numpy as np
-from scipy.integrate import odeint
+from scipy.integrate import odeint, simps
 from scipy.misc import derivative
 from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
+import math
 from scipy.integrate import quad
 from scipy.special import erf
-import math
 
 def convert_angstrom_to_atomic_units(value):
     return value / 0.53
@@ -144,7 +144,10 @@ class Pristrelki_method:
                     if ngr == self.count_e:
                         break
         return energy, fun_psi
+#-----------------end class method pristrelki-----------------------------
 
+
+#------------------data initial---------------------------------------------
 V0 = convert_electronvolt_to_atomic_units(20)
 L = convert_angstrom_to_atomic_units(2.0)
 W = 5.0
@@ -152,98 +155,192 @@ A = -L
 B = +L
 n = 1001
 X = np.linspace(A, B, n)  # forward
+count_phi = 100
+N1 = 5
+N2 = 8
+N3 = 15
+phi_values = []
+Temp = []
+#--------------------end data initial----------------------------------------
 
-def fun_U_0(x):
+def fun_U(x): #potential function
     if (abs(x) < L):
         return V0 * erf(x)
     else:
         return W
 
-def fun_U(x):
-    if 0 < x < 0.5:
-        return fun_U_0(x) + 2.8
-    else:
-        return fun_U_0(x)
-
-def fun_V(x):
-    return fun_U(x) - fun_U_0(x)
-
-def get_value_V(psi_l, oper_value, psi_m):
+def srednee(psi_m, oper_value, psi_n):
     value = []
-    for ind in range(len(oper_value)):
-        value.append(psi_l[ind] * oper_value[ind] * psi_m[ind])
+    if oper_value is None:
+        for ind in range(len(psi_m)):
+            value.append(psi_m[ind] * psi_n[ind])
+    else:
+        for ind in range(len(psi_m)):
+            value.append(psi_m[ind] * oper_value[ind] * psi_n[ind])
 
-    fun = interp1d(X, value, kind='cubic')
-    result = quad(fun, A, B)
-    return result[0]
+    result = simps(value, X)#Integrate y(x) using samples along the given axis and the composite
+                            #Simpson's rule.  If x is None, spacing of dx is assumed.
+    return result
 
-def plot(U0, U, psi1, psi2):
+def calcT(funF, X):
+    localX = [X[0] - 4 * 1.e-6]
+    localX.append(X[0] - 2 * 1.e-6)
+    for x in X:
+        localX.append(x)
+    localX.append(X[len(X) - 1] + 2 * 1.e-6)
+    localX.append(X[len(X) - 1] + 4 * 1.e-6)
+
+    der = []
+    for x in X:
+        der.append(-1/2 * derivative(funF, x, dx=1.e-6, n=2, order=5))
+    return der
+
+def phi_even(k):
+    return lambda x: 1 / math.sqrt(L) * math.sin(math.pi * k * x / (2 * L))
+
+def phi_odd(k):
+    return lambda x: 1 / math.sqrt(L) * math.cos(math.pi * k * x / (2 * L))
+
+#target of functions in point k
+def get_phi_k_value(k):
+    if k % 2 == 0:
+        fun = phi_even(k)
+    else:
+        fun = phi_odd(k)
+
+    result = []
+    for x in X:
+        result.append(fun(x))
+
+    return result
+
+#functions
+def get_phi_k(k):
+    if k % 2 == 0:
+        return phi_even(k)
+    else:
+        return phi_odd(k)
+
+def get_matrix_H(N):
+    value_U = np.array([fun_U(X[i]) for i in np.arange(n)])
+    matrix = np.zeros((N, N))
+    for i in range(N):
+        for j in range(N):
+            new_value = 0
+            if i == j:
+                new_value += math.pow(math.pi * (i + 1) / L, 2) / 8
+            new_value += srednee(phi_values[i], value_U, phi_values[j])
+            matrix[i][j] = new_value
+    return matrix
+
+def get_psi(c):
+    result = []
+    for i in range(len(X)):
+        value = 0
+        for j in range(len(c)):
+            value += c[j] * phi_values[j][i]
+        result.append(value)
+
+    coefPsi = srednee(result, None, result)
+    for i in range(len(result)):
+        result[i] /= math.sqrt(coefPsi)
+    return result
+
+def plot(U, psi1, psi2, psi3, psi):
     plt.axis([A, B, -1, W])
-    plt.plot(X, U0, 'g-', linewidth=5.0, label="U0(x)")
-    plt.plot(X, U, 'y-', linewidth=1.0, label="U(x)")
+    plt.plot(X, U, 'g-', linewidth=5.0, label="U(x)")
     Zero = np.zeros(n, dtype=float)
     plt.plot(X, Zero, 'k-', linewidth=1.0)  # abscissa axis
-    plt.plot(X, psi1, 'm-', linewidth=5.0, label="'$\psi$1'")
-    plt.plot(X, psi2, 'b-', linewidth=1.0, label="'$\psi$2'")
+    plt.plot(X, psi, 'b-', linewidth=8.0, label="'$\psi$'")
+    plt.plot(X, psi1, 'y-', linewidth=5.0, label="'$\psi$1'")
+    plt.plot(X, psi2, 'm-', linewidth=2.5, label="'$\psi$2'")
+    plt.plot(X, psi3, 'g-', linewidth=0.5, label="'$\psi$3'")
     plt.xlabel("X", fontsize=18, color="k")
-    plt.ylabel("U0(x), U(x), '$\psi$1', '$\psi$2' ", fontsize=18, color="k")
+    plt.ylabel("U(x), Psi(x)", fontsize=18, color="k")
     plt.grid(True)
     plt.legend(fontsize=16, shadow=True, fancybox=True, loc='upper right')
-    plt.savefig("second", dpi=300)
     plt.show()
 
-
-def check_shodymost(V, energy_U0, psi_U0, value_fun_V ):
-    print("Check 47.12 (shodymost ryada posledovatelnych priblizhenii)")
-    print("Vlm       <<                  El-Em")
-    for m in range(len(energy_U0)):
-        V.append([])
-        for l in range(len(energy_U0)):
-            new_value = get_value_V(psi_U0[m], value_fun_V, psi_U0[l])
-            V[m].append(new_value)
-            if m != l:
-                print(str(abs(new_value)) + "  <<  " + str(abs(energy_U0[m] - energy_U0[l])))
+for i in range(count_phi):
+    phi_values.append(get_phi_k_value(i + 1))
 
 
 
-pristrelka_U0 = Pristrelki_method(fun_U_0, U0=-4, ne=101, e2=15, count_e=10)
-energy_U0, psi_U0 = pristrelka_U0.get_energy()
-for i in np.arange(len(energy_U0)):
-    stroka = "i = {:1d}    energy[i] = {:12.5e}"
-    print(stroka.format(i, energy_U0[i]))
-
-value_fun_V = []
-for x in X:
-    value_fun_V.append(fun_V(x))
-
-V = []
-check_shodymost(V, energy_U0, psi_U0, value_fun_V)
-
-summa = 0
-for i in range(1, len(energy_U0)):
-    summa += V[0][i] * V[0][i] / (energy_U0[0] - energy_U0[i])
-
-e0 = energy_U0[0] + V[0][0] + summa
-psi0 = []
-for i in range(len(psi_U0[i])):
-    sum = 0
-    for j in range(1, len(energy_U0)):
-        sum += V[0][j] / (energy_U0[0] - energy_U0[j]) * psi_U0[j][i]
-    psi0.append(psi_U0[0][i] + sum)
-
-pristrelka_U = Pristrelki_method(fun_U, U0=-4, ne=101, e2=15, count_e=1)
-energy_U, psi_U = pristrelka_U.get_energy()
+#-----------------main-----------
 
 
+#------------------First compare-----------
+H = get_matrix_H(N1)#calc matrix H for N1 count
 
-stroka = "E (method pristrelki) = {:12.5e}"
+e, c = np.linalg.eig(H)
+E0 = e.min()
+for i in range(len(e)):
+    if e[i] == E0:
+        min_ind = i
+        break
+
+coef_c = []
+for i in range(len(c)):
+    coef_c.append(c[i][min_ind])
+if (coef_c[0] < 0):
+    coef_c = np.dot(coef_c, -1)
+
+psi1 = get_psi(coef_c)  #calc psi1
+#------------------end first----------------
+
+#--------------Second-------------------
+H = get_matrix_H(N2)
+e, c = np.linalg.eig(H)
+E02 = e.min()
+for i in range(len(e)):
+    if e[i] == E02:
+        min_ind = i
+        break
+
+coef_c = []
+for i in range(len(c)):
+    coef_c.append(c[i][min_ind])
+
+if coef_c[0] < 0:
+    coef_c = np.dot(coef_c, -1)
+psi2 = get_psi(coef_c)
+#--------------end second------------------
+
+
+#-------------third--------------------
+H = get_matrix_H(N3)
+e, c = np.linalg.eig(H)
+E03 = e.min()
+for i in range(len(e)):
+    if e[i] == E03:
+        min_ind = i
+        break
+
+coef_c = []
+for i in range(len(c)):
+    coef_c.append(c[i][min_ind])
+
+if coef_c[0] < 0:
+    coef_c = np.dot(coef_c, -1)
+psi3 = get_psi(coef_c)
+#--------------end third-------------------
+
+method_pristrelki_U = Pristrelki_method(fun_U, U0=-4, ne=101, e2=15, count_e=1)
+energy_U, psi_U = method_pristrelki_U.get_energy()
+
+#---------write results--------------------
+stroka = " E0 = {:12.5e}"
+print("Using pristrelka method ")
 print(stroka.format(energy_U[0]))
-stroka = "E (method teorija vozmushenij) = {:12.5e}"
-print(stroka.format(e0))
+print()
+print("Using variacionnij method")
+print( stroka.format(E0), "( N = ", N1, ")")
+print( stroka.format(E02), "( N = ", N2, ")")
+print(stroka.format(E03), "( N = ", N3, ")")
 
-value_U0 = np.array([fun_U_0(X[i]) for i in np.arange(n)])
+
+
+#----------plot graph----------------------
 value_U = np.array([fun_U(X[i]) for i in np.arange(n)])
-plot(value_U0, value_U, psi_U[0], psi0)
-
-
+plot(value_U, psi1, psi2, psi3, psi_U[0])
 
